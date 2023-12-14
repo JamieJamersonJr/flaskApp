@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="width: 60vw; float: right;">
+        <canvas id="myChart" style="background: transparent;"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>parsedPlotData = null</script>
+    {% if data %}
+    <!-- {{data}} -->
+    <script>
+    let plotData = JSON.parse(`{{ data|tojson }}`)
+    let parsedPlotData = plotData.flat().map(x => JSON.parse(x.replaceAll(`'`,`"`)) )
+    parsedPlotData = parsedPlotData.map(val => {return {y:parseFloat(val.y), x:parseFloat(val.x)}})
+    console.log(parsedPlotData)
+    </script>
+    {% endif %}
+    
+    <script>
+
+    const ctx = document.getElementById('myChart');
+    if (parsedPlotData != null && parsedPlotData.length > 0) {
+        new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: "PPM",
+                    data: parsedPlotData,
+                    backgroundColor: ['lightblue'],
+                    radius: 4,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom,'
+                    }
+                }
+            },
+        });
+    }
+
+    </script>
+
+
+</body>
+
+</html>

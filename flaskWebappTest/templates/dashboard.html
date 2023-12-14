@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'header.html' %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- <link rel="stylesheet" href="{{url_for('static', filename='base_css.css')}}"> -->
+</head>
+<body>
+    <!-- <script>
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return null;
+        }
+        let c = document.createElement('div')
+        let user = getCookie('current_user')
+        if (user == null) {
+            window.location.replace('/login')
+        } -->
+    <!-- </script> -->
+    <div style="position: absolute; width: 40vw; height: 50%;">
+        <div id="formContainer">
+            <form action="dashboard" method="post">
+                <div class="justify-items">
+                    <div>New Mean: <input type="number" step="0.01" name="newMean" required></div>
+                </div>
+                <div class="center">
+                    <input type="submit" value="Submit New Mean" style="width: 100%;">
+                </div>
+            </form>
+            <br>
+            {% if addedMean %}
+            <div>New Mean Added: {{ addedMean }}!</div>
+            {% endif %}
+        </div>
+        
+    </div>
+    <div id="graph">
+        {% include 'graph.html' %}
+    </div>
+</body>
+<script src="{{url_for('static', filename='dashboard.js')}}"></script>
+</html>
